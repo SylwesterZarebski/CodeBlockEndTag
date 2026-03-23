@@ -6,7 +6,7 @@ using System.Windows.Media;
 
 namespace CodeBlockEndTag;
 
-internal static class MaxAdornmentWidthExtension
+public static class MaxAdornmentWidthExtension
 {
     public static bool GetEnable(DependencyObject obj) => (bool)obj.GetValue(EnableProperty);
     public static void SetEnable(DependencyObject obj, bool value) => obj.SetValue(EnableProperty, value);
@@ -28,8 +28,13 @@ internal static class MaxAdornmentWidthExtension
     private static bool BindMaxWidth(FrameworkElement element)
     {
         var adornmentWrapper = FindParent(element, "AdornmentWrapper");
-        var viewStack = FindParent(adornmentWrapper, "ViewStack");
-        if (viewStack != null && adornmentWrapper != null)
+        if (adornmentWrapper == null)
+        {
+            return false;
+        }
+
+        var canvas = FindParent(adornmentWrapper, "Canvas");
+        if (canvas != null)
         {
             var multiBinding = new MultiBinding
             {
@@ -37,7 +42,7 @@ internal static class MaxAdornmentWidthExtension
             };
             multiBinding.Bindings.Add(new Binding("ActualWidth")
             {
-                Source = viewStack
+                Source = canvas
             });
             multiBinding.Bindings.Add(new Binding("(Canvas.Left)")
             {
@@ -46,11 +51,17 @@ internal static class MaxAdornmentWidthExtension
             BindingOperations.SetBinding(element, FrameworkElement.MaxWidthProperty, multiBinding);
             return true;
         }
+
         return false;
     }
 
     private static FrameworkElement FindParent(FrameworkElement child, string parentType)
     {
+        if (child == null)
+        {
+            return null;
+        }
+
         FrameworkElement parent = VisualTreeHelper.GetParent(child) as FrameworkElement;
         while (parent != null)
         {
@@ -70,7 +81,8 @@ internal class MaxAdornmentWidthConverter : IMultiValueConverter
     {
         if (values.Length == 2 &&
             values[0] is double actualWidth &&
-            values[1] is double canvasLeft)
+            values[1] is double canvasLeft &&
+            actualWidth > 0)
         {
             return Math.Max(0, actualWidth - canvasLeft - 20); // 20 is margin
         }
