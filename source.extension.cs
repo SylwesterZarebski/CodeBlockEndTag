@@ -13,7 +13,7 @@ namespace CodeBlockEndTag
         public const string Description = @"All folding regions in Visual Studio will get tagged at the end with information about this region.
 This includes actual #regions, code blocks or any other form of folding.";
         public const string Language = "en-US";
-        public const string Version = "4.0.0.7";
+        public const string Version = "4.0.0.8";
         public const string Author = "KhaosPrinz";
         public const string Tags = "code, block, codeblock, end, tag, tagger, bracket, brackets, info, information, condition, vscommand, vscommands, region";
         public const bool IsPreview = false;
