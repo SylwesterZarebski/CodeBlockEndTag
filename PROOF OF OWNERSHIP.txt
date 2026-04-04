@@ -1,0 +1,7 @@
+# Proof of Ownership
+
+Dear VS Marketplace Support Team (Representative: 733be9c8)
+
+I hope this is proof that I (Khaos66) am infact owner of the [CodeBlockEndTag Extension](https://marketplace.visualstudio.com/items?itemName=KhaosPrinz.CodeBlockEndTag)
+
+Please kindly help me publish a new version to resolve [issue 38](https://github.com/KhaosCoders/VSCodeBlockEndTag/issues/38)
